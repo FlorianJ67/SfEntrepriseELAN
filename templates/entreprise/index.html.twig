@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EntrepriseController!{% endblock %}
+
+{% block body %}
+    <h1>Entreprises</h1>
+
+    {% for entreprise in entreprises %}
+        {{ entreprise }}
+    {% endfor %}
+    
+{% endblock %}
