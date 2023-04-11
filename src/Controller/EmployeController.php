@@ -3,27 +3,30 @@
 namespace App\Controller;
 
 use App\Entity\Employe;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmployeController extends AbstractController
 {
     #[Route('/employe', name: 'app_employe')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
-        $entreprises = $doctrine->getRepository(Entreprise::class)->findBy([],["rasionSociale" => "DESC"]);
+        $employes = $entityManager->getRepository(Employe::class)->findAll();
+       
         return $this->render('employe/index.html.twig', [
-            'entreprises' => $entreprises,
+            'employes' => $employes,
         ]);
     }
 
-    public function show(): Response
+    #[Route('/employe/{id}', name: 'show_employe')]
+    public function show(Employe $employe): Response
     {
-        $entreprise = "";
-        return $this->render('entreprise/show.html.twig',[
-            'entreprise' => $entreprise
+        return $this->render('employe/show.html.twig', [
+            'employe' => $employe
         ]);
     }
+
 }
