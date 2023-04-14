@@ -3,8 +3,28 @@
 {% block title %}Ajouter un employer{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un employé</h1>
+    {% if edit %}
+        <h1>Editer un employer</h1>
+    {% else %}
+        <h1>Ajouter un employer</h1>
+    {% endif %}
 
     {{ form(formAddEmploye) }}
+
+
+    {# 
+        {{ form_start(formAddEmploye) }}
+    
+            {{ form_row(formAddEmploye.nom) }}
+            {{ form_row(formAddEmploye.prenom) }}
+            {{ form_row(formAddEmploye.dateNaissance) }}
+            {{ form_row(formAddEmploye.dateEmbauche) }}
+            {{ form_row(formAddEmploye.ville) }}
+            {{ form_row(formAddEmploye.entreprise) }}
+            {{ form_row(formAddEmploye.submit) }}
+
+        {{ form_end(formAddEmploye) }}
+    #}
+
     
 {% endblock %}

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 
 class EntrepriseController extends AbstractController
 {
@@ -48,13 +49,21 @@ class EntrepriseController extends AbstractController
         }
 
         return $this->render('entreprise/add.html.twig', [
-            'formAddEntreprise' => $form->createView()
+            'formAddEntreprise' => $form->createView(),
+            'edit' => $entreprise->getId()
         ]);
 
     }
     
-    #[Route('/entreprise/{id}', name: 'show_entreprise')]
-    // a continuer demain
+    #[Route('/entreprise/{id}/delete', name: 'delete_entreprise')]
+    public function delete(ManagerRegistry $doctrine, Entreprise $entreprise): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($entreprise);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_entreprise');
+    }
 
     #[Route('/entreprise/{id}', name: 'show_entreprise')]
     public function show(Entreprise $entreprise): Response
